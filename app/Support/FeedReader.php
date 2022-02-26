@@ -15,6 +15,11 @@ class FeedReader
         protected string $url,
     ) {}
 
+    public static function make(string $url): static
+    {
+        return new static($url);
+    }
+
     public function read(): static
     {
         if ($this->loaded()) {
@@ -26,11 +31,20 @@ class FeedReader
         return $this;
     }
 
+    public function updated(): Carbon
+    {
+        $results = $this->document->parse([
+            'updated' => ['uses' => 'updated'],
+        ]);
+
+        return Carbon::parse($results['updated']);
+    }
+
     public function entries(): Collection
     {
         $entries = $this->document->parse([
             'entries' => [
-                'uses' => 'entry[title,link::href>link,summary,updated]',
+                'uses' => 'entry[id,title,link::href>link,summary,updated]',
             ]
         ]);
 

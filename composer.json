@@ -10,7 +10,8 @@
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "orchestra/parser": "^7.0"
+        "orchestra/parser": "^7.0",
+        "ryangjchandler/laravel-uuid": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
