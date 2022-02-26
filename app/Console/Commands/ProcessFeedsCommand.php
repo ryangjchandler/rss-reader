@@ -31,6 +31,8 @@ class ProcessFeedsCommand extends Command
     {
         Feed::lazy()
             ->each(function (Feed $feed) {
+                $this->info('Dispatching processor for feed ' . $feed->getKey() . '.');
+
                 dispatch(new ProcessFeed($feed));
             });
 

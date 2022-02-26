@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Queue;
 use function Pest\Laravel\artisan;
 
 it('dispatches process feed jobs for each feed', function () {
-    Feed::create([
+    $feed = Feed::create([
         'name' => 'foo',
         'url' => 'https://ryangjchandler.co.uk/feed',
     ]);
@@ -17,6 +17,7 @@ it('dispatches process feed jobs for each feed', function () {
     Queue::fake();
 
     artisan(ProcessFeedsCommand::class)
+        ->expectsOutputToContain('Dispatching processor for feed ' . $feed->getKey())
         ->assertSuccessful();
 
     Queue::assertPushed(ProcessFeed::class);
